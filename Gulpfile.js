@@ -69,14 +69,14 @@ gulp.task('clean',function() {
 gulp.task('rev',function(){
 	var streamCss,streamJs;
 	//rev-css
-	streamCss=gulp.src('src/css/*.css')		
+	streamCss=gulp.src('src/css/**/*.css')		
         .pipe(csso())
 		.pipe(rev())
         .pipe(gulp.dest('lib/css/'))
 		.pipe(rev.manifest())
 		.pipe(gulp.dest('rev/css'));
 	//rev-js
-	streamJs=gulp.src('src/js/*.js')		
+	streamJs=gulp.src('src/js/**/*.js')		
         .pipe(uglify())
 		.pipe(rev())
         .pipe(gulp.dest('lib/js/'))
@@ -113,7 +113,7 @@ gulp.task('sprite', function () {
 });
 
 
-/* watch less ：整个目录
+/* watch less ：整个less目录
  * watch sprite ：taskFolders里面写的目录
  */
 gulp.task('watch',['less','sprite'],function(){
