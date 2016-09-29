@@ -9,18 +9,23 @@ var less = require("gulp-less");//编译less
 var autoprefixer = require('gulp-autoprefixer');//css 前缀
 var uglify = require("gulp-uglify");//js压缩
 var spritesmith = require('gulp.spritesmith');//雪碧图
+var plumber = require('gulp-plumber');//出现异常并不终止watch事件
+var notify = require('gulp-notify');//错误提示
 
 
  
 function loadTask(lastFolder){
-	var stream = gulp.src(['src/img/sprite/'+lastFolder+'/!(sprite).@(png|jpg)']).pipe(spritesmith({
+	var stream = gulp.src(['src/img/sprite/'+lastFolder+'/!(sprite).@(png|jpg)'])
+	.pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+	.pipe(spritesmith({
 		imgName: 'sprite.png',
 		cssName: 'sprite.css',
 		padding:5,
 		spritestamp: true,//css时间戳
 		cssTemplate:"src/img/sprite/handlebarsStr.css"//css模板
 		
-	})).pipe(gulp.dest('src/img/sprite/'+lastFolder));
+	}))
+	.pipe(gulp.dest('src/img/sprite/'+lastFolder));
 	return stream;
 } 
 
@@ -43,6 +48,7 @@ gulp.task('copy', function() {
 //less-->css
 gulp.task('less', function () {
     gulp.src('src/less/**/*.less',{base:'src/less'})
+    .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
     .pipe(less())
 	.pipe(autoprefixer({
             browsers: ['last 2 versions','safari 5','Firefox >= 40', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
