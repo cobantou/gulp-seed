@@ -1,0 +1,25 @@
+html {
+  background-color: blue;
+  opacity: 1;
+  -webkit-transform: auto;
+  -ms-transform: auto;
+  transform: auto;
+  -webkit-transition: all;
+  transition: all;
+}
+:-webkit-full-screen a {
+  display: -webkit-box;
+  display: flex;
+}
+:-moz-full-screen a {
+  display: flex;
+}
+:-ms-fullscreen a {
+  display: -ms-flexbox;
+  display: flex;
+}
+:fullscreen a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
